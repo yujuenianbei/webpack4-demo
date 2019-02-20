@@ -6,29 +6,36 @@ import img from '../img/icon.png';
 import printme from './print.js'
 
 function component() {
-    var element = document.createElement('div');
-  
-    // Lodash（目前通过一个 script 脚本引入）对于执行这一行是必需的
-    // Lodash, now imported by this script
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-    element.classList.add('hello');
+  var element = document.createElement('div');
 
-    // add png into div
-    var myicon = new Image();
-    myicon.src = img;
-    element.appendChild(myicon);
+  // Lodash（目前通过一个 script 脚本引入）对于执行这一行是必需的
+  // Lodash, now imported by this script
+  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+  element.classList.add('hello');
 
-    var btn = document.createElement('button');
-    btn.innerHTML = 'click me and the console';
-    btn.onclick = printme;
+  // add png into div
+  var myicon = new Image();
+  myicon.src = img;
+  element.appendChild(myicon);
 
-    element.appendChild(btn);
-    
-    var Icon = document.createElement('i');
-    Icon.className = 'fa fa-camera-retro fa-lg'
-    element.appendChild(Icon);
+  var btn = document.createElement('button');
+  btn.innerHTML = 'click me and the console';
+  btn.onclick = printme;
 
-    return element;
-  }
-  
-  document.body.appendChild(component());
+  element.appendChild(btn);
+
+  var Icon = document.createElement('i');
+  Icon.className = 'fa fa-camera-retro fa-lg'
+  element.appendChild(Icon);
+
+  return element;
+}
+
+document.body.appendChild(component());
+
+if (module.hot) {
+  module.hot.accept('./print.js', function () {
+    console.log('Accepting the updated printMe module!');
+    printMe();
+  })
+}
